@@ -146,9 +146,9 @@
 
 <div id="shop">
   <h2>Shop</h2>
-  <button class="shop-item" onclick="buyUpgrade('size')">Upgrade Button Size (150 points)</button>
-  <button class="shop-item" onclick="buyUpgrade('color')">Change Button Color (200 points)</button>
-  <button class="shop-item" onclick="buyUpgrade('animation')">Button Animation (30 points)</button>
+  <button class="shop-item" id="sizeUpgradeButton" onclick="buyUpgrade('size')">Upgrade Button Size (150 points)</button>
+  <button class="shop-item" id="colorUpgradeButton" onclick="buyUpgrade('color')">Change Button Color (200 points)</button>
+  <button class="shop-item" id="animationUpgradeButton" onclick="buyUpgrade('animation')">Button Animation (30 points)</button>
   <button class="shop-item" onclick="closeShop()">Close Shop</button>
 </div>
 
@@ -224,14 +224,17 @@
     if (type === 'size' && score >= 150) {
       score -= 150;
       buttonSize += 10;
+      document.getElementById('sizeUpgradeButton').style.display = 'none'; // Hide button after purchase
       alert('Button size upgraded!');
     } else if (type === 'color' && score >= 200) {
       score -= 200;
       buttonColor = "#ff4081";
+      document.getElementById('colorUpgradeButton').style.display = 'none'; // Hide button after purchase
       alert('Button color changed!');
     } else if (type === 'animation' && score >= 30) {
       score -= 30;
       buttonAnimation = true;
+      document.getElementById('animationUpgradeButton').style.display = 'none'; // Hide button after purchase
       alert('Button animation enabled!');
     } else {
       alert('Not enough points!');
