@@ -149,7 +149,6 @@
   <button class="shop-item" onclick="buyUpgrade('size')">Upgrade Button Size (150 points)</button>
   <button class="shop-item" onclick="buyUpgrade('color')">Change Button Color (200 points)</button>
   <button class="shop-item" onclick="buyUpgrade('animation')">Button Animation (30 points)</button>
-  <button class="shop-item" onclick="buyUpgrade('autoclick')">Auto-Clicker (200,000 points)</button>
   <button class="shop-item" onclick="closeShop()">Close Shop</button>
 </div>
 
@@ -160,8 +159,6 @@
   let buttonColor = "#00bcd4";
   let buttonShape = 'circle'; 
   let buttonAnimation = false;
-  let autoClickerEnabled = false;
-  let createdButtons = [];
   const scoreboard = document.getElementById("scoreboard");
 
   const difficultySpeeds = {
@@ -176,9 +173,6 @@
     document.getElementById("menu").style.display = "none";
     scoreboard.style.display = "block";
     createRandomButton();
-    if (autoClickerEnabled) {
-      startAutoClicker();
-    }
   }
 
   // Create random buttons at intervals
@@ -196,31 +190,16 @@
     button.style.height = `${size}px`;
     button.style.backgroundColor = buttonColor;
 
-    // Introduce an extremely rare chance (0.000000000000000000000000000000000000000000000000000000000000009) for the button to turn rainbow
-    const rareChance = Math.random();
-    if (rareChance < 9e-59) {  // Extremely small chance (0.000000000000000000000000000000000000000000000000000000000000009)
-      button.style.background = 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)';
-      button.innerText = "🌈";
-      button.onclick = () => {
-        score += 2000000000000; // Add 2 trillion points
-        alert('Congratulations! You won 2 trillion points!');
-        button.remove();
-        scoreboard.innerText = `Score: ${score}`;
-      };
-    } else {
-      // Regular button behavior
-      button.onclick = () => {
-        score++;
-        scoreboard.innerText = `Score: ${score}`;
-        button.remove();
-      };
-    }
+    // Regular button behavior
+    button.onclick = () => {
+      score++;
+      scoreboard.innerText = `Score: ${score}`;
+      button.remove();
+    };
 
     if (buttonAnimation) {
       button.classList.add('shake');
     }
-
-    createdButtons.push(button); // Add button to the list of created buttons
 
     const timeout = setTimeout(() => {
       button.remove();
@@ -254,27 +233,12 @@
       score -= 30;
       buttonAnimation = true;
       alert('Button animation enabled!');
-    } else if (type === 'autoclick' && score >= 200000) {
-      score -= 200000;
-      autoClickerEnabled = true;
-      alert('Auto-Clicker purchased!');
     } else {
       alert('Not enough points!');
     }
     scoreboard.innerText = `Score: ${score}`;
   }
-
-  // Function for auto-clicker
-  function startAutoClicker() {
-    setInterval(() => {
-      if (createdButtons.length > 0) {
-        const randomButton = createdButtons[Math.floor(Math.random() * createdButtons.length)];
-        randomButton.click(); // Automatically click a random created button
-      }
-    }, 100); // Click every 100ms
-  }
 </script>
 
 </body>
 </html>
-
