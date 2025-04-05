@@ -181,6 +181,8 @@
   let buttonShape = 'circle'; 
   let buttonAnimation = false;
   const scoreboard = document.getElementById("scoreboard");
+  const shopButton = document.querySelector(".shop-button");
+  const shopButtonRect = shopButton.getBoundingClientRect();
 
   const difficultySpeeds = {
     easy: 2000,
@@ -203,8 +205,23 @@
     button.innerText = "🎯";
 
     const size = buttonSize;
-    const x = Math.random() * (window.innerWidth - size);
-    const y = Math.random() * (window.innerHeight - size);
+    let x = Math.random() * (window.innerWidth - size);
+    let y = Math.random() * (window.innerHeight - size);
+
+    // Get the shop button's position and dimensions
+    const shopButtonRect = shopButton.getBoundingClientRect();
+
+    // Prevent circle overlap with the shop button
+    while (
+      x + size > shopButtonRect.left && 
+      x < shopButtonRect.right && 
+      y + size > shopButtonRect.top && 
+      y < shopButtonRect.bottom
+    ) {
+      x = Math.random() * (window.innerWidth - size);
+      y = Math.random() * (window.innerHeight - size);
+    }
+
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
     button.style.width = `${size}px`;
