@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Click for Points!</title>
   <style>
     body {
@@ -129,6 +130,26 @@
       background: #1976d2;
     }
 
+    /* Mobile responsive */
+    @media (max-width: 600px) {
+      .button {
+        width: 80px;
+        height: 80px;
+        font-size: 25px;
+      }
+
+      .difficulty-button,
+      .shop-item,
+      .shop-button {
+        font-size: 14px;
+        padding: 12px 24px;
+        width: 90%;
+      }
+
+      #scoreboard {
+        font-size: 18px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -191,11 +212,11 @@
     button.style.backgroundColor = buttonColor;
 
     // Regular button behavior
-    button.onclick = () => {
+    button.addEventListener('click', () => {
       score++;
       scoreboard.innerText = `Score: ${score}`;
       button.remove();
-    };
+    });
 
     if (buttonAnimation) {
       button.classList.add('shake');
